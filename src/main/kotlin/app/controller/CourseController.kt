@@ -4,20 +4,23 @@ import app.model.Course
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/courses/api")
 class CourseController(val service: CourseService) {
-    @GetMapping
+    @GetMapping("/all")
     fun index() = service.findCourses()
+    @GetMapping("/course")
+    fun getById(@RequestParam id: String) = service.getCourseById(id)
 
-    @PostMapping
+    @PostMapping("/one")
     fun post(@RequestBody course: Course) = service.addCourse(course)
+    @PostMapping("/many")
+    fun postAll(@RequestBody courses: List<Course>) =service.addAllCourses(courses)
 
-    @PutMapping("/{id}")
-    fun update(@PathVariable id: String, @RequestBody course: Course) = service.updateCourse(id, course)
+    @PutMapping("/course")
+    fun update(@RequestParam id: String, @RequestBody course: Course) = service.updateCourse(id, course)
 
-    @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: String) = service.removeCourse(id)
+    @DeleteMapping("/course")
+    fun delete(@RequestParam id: String) = service.removeCourse(id)
 
-    @GetMapping("/{id}")
-    fun getById(@PathVariable id: String) = service.getCourseById(id)
+
 }

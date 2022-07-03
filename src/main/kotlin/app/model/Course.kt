@@ -10,6 +10,7 @@ data class Course(
     val title: String,
     val about: String,
     val offered: String,
+    val banner: String,
     val rating: Float,
     val price: Float,
     val modules: Int,

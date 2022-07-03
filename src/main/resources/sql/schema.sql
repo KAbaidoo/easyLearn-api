@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS courses (
   title                   VARCHAR      NOT NULL,
   about                   VARCHAR      NOT NULL,
   offered               VARCHAR      NOT NULL,
+  banner                VARCHAR      NOT NULL,
   rating                  FLOAT      NOT NULL,
   price                   FLOAT      NOT NULL,
   modules                 INT      NOT NULL,

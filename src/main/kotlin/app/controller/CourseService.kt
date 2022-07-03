@@ -12,9 +12,13 @@ class CourseService(val db: CourseRepository) {
     fun addCourse(course: Course) = db.save(course)
 
     fun updateCourse(id: String, course: Course) {
-        if (db.existsById(id)) db.save(course)
+        if (db.existsById(id)) {
+            db.deleteById(id)
+            db.save(course)
+        }
     }
     fun removeCourse(id: String) = db.deleteById(id)
 
     fun getCourseById(id: String) = db.findById(id)
+    fun addAllCourses(courses: List<Course>) = db.saveAll(courses)
 }
