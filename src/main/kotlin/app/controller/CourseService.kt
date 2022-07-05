@@ -7,6 +7,17 @@ import org.springframework.stereotype.Service
 @Service
 class CourseService(val db: CourseRepository) {
 
+
+    fun findRandom(): Course {
+        val courses: MutableIterable<Course> = db.findAll()
+        val course = courses.run {
+            var index: Int = (0 until this.count()).random()
+                this.elementAt(index)
+        }
+        return course
+    }
+
+
     fun findCourses() = db.findAll()
 
     fun addCourse(course: Course) = db.save(course)
@@ -17,8 +28,9 @@ class CourseService(val db: CourseRepository) {
             db.save(course)
         }
     }
+
     fun removeCourse(id: String) = db.deleteById(id)
 
-    fun getCourseById(id: String) = db.findById(id)
+    fun findCourseById(id: String) = db.findById(id)
     fun addAllCourses(courses: List<Course>) = db.saveAll(courses)
 }

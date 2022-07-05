@@ -6,10 +6,18 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/courses/api")
 class CourseController(val service: CourseService) {
+
+
     @GetMapping("/all")
     fun index() = service.findCourses()
+
+//  get a random course
+    @GetMapping("/random")
+    fun getRandom() = service.findRandom()
+
+
     @GetMapping("/course")
-    fun getById(@RequestParam id: String) = service.getCourseById(id)
+    fun getById(@RequestParam id: String) = service.findCourseById(id)
 
     @PostMapping("/one")
     fun post(@RequestBody course: Course) = service.addCourse(course)
