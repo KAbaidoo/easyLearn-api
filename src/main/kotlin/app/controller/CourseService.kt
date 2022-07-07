@@ -1,7 +1,7 @@
 package app.controller
 
-import app.CourseRepository
 import app.model.Course
+import app.repository.CourseRepository
 import org.springframework.stereotype.Service
 
 @Service

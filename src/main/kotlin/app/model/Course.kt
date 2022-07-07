@@ -6,7 +6,8 @@ import org.springframework.data.relational.core.mapping.Table
 
 @Table("COURSES")
 data class Course(
-    @Id val id: String?,
+    @Id
+    val id: String?,
     val title: String,
     val about: String,
     val offered: String,

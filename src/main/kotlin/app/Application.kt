@@ -1,7 +1,6 @@
 package app
 
 
-import app.model.Course
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.data.annotation.Id
@@ -20,7 +19,7 @@ fun main(args: Array<String>) {
     runApplication<DemoApplication>(*args)
 }
 
-interface CourseRepository : CrudRepository<Course, String>
+
 
 interface ActivityRepository : CrudRepository<Activity, String>
 
