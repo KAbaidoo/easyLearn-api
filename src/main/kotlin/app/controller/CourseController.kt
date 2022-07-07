@@ -15,20 +15,19 @@ class CourseController(val service: CourseService) {
     @GetMapping("/random")
     fun getRandom() = service.findRandom()
 
-
-    @GetMapping("/course")
-    fun getById(@RequestParam id: String) = service.findCourseById(id)
-
     @PostMapping("/one")
     fun post(@RequestBody course: Course) = service.addCourse(course)
     @PostMapping("/many")
     fun postAll(@RequestBody courses: List<Course>) =service.addAllCourses(courses)
 
-    @PutMapping("/course")
-    fun update(@RequestParam id: String, @RequestBody course: Course) = service.updateCourse(id, course)
+    @GetMapping("/{id}")
+    fun getById(@PathVariable id: String) = service.findCourseById(id)
 
-    @DeleteMapping("/course")
-    fun delete(@RequestParam id: String) = service.removeCourse(id)
+    @PutMapping("/{id}")
+    fun update(@PathVariable id: String, @RequestBody course: Course) = service.updateCourse(id, course)
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: String) = service.removeCourse(id)
 
 
 }

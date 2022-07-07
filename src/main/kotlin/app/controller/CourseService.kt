@@ -33,4 +33,6 @@ class CourseService(val db: CourseRepository) {
 
     fun findCourseById(id: String) = db.findById(id)
     fun addAllCourses(courses: List<Course>) = db.saveAll(courses)
+
+
 }
