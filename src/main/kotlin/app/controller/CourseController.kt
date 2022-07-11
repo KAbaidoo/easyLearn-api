@@ -4,30 +4,40 @@ import app.model.Course
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/courses/api")
+@RequestMapping("/api/courses")
 class CourseController(val service: CourseService) {
 
 
     @GetMapping("/all")
-    fun index() = service.findCourses()
+    fun index() = service.findAllCourses()
 
-//  get a random course
+    //  get a random course
     @GetMapping("/random")
     fun getRandom() = service.findRandom()
-
-    @PostMapping("/one")
-    fun post(@RequestBody course: Course) = service.addCourse(course)
-    @PostMapping("/many")
-    fun postAll(@RequestBody courses: List<Course>) =service.addAllCourses(courses)
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: String) = service.findCourseById(id)
 
+    @GetMapping("/all", params = ["sortBy"])
+    fun sortedIndex(
+        @RequestParam sortBy: String
+    ) = service.findAllSorted(sortBy)
+
+    @PostMapping("/one")
+    fun post(@RequestBody course: Course) = service.addCourse(course)
+
+    @PostMapping("/many")
+    fun postAll(@RequestBody courses: List<Course>) = service.addCourses(courses)
+
+
     @PutMapping("/{id}")
-    fun update(@PathVariable id: String, @RequestBody course: Course) = service.updateCourse(id, course)
+    fun update(@PathVariable id: String, @RequestBody course: Course): Course = service.updateCourse(id, course)
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: String) = service.removeCourse(id)
+//
+
+
 
 
 }

@@ -1,6 +1,6 @@
 package app.repository
 
 import app.model.Course
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.PagingAndSortingRepository
 
-interface CourseRepository : CrudRepository<Course, String>
+interface CourseRepository : PagingAndSortingRepository<Course, String>
