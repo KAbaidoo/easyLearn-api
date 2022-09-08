@@ -2,6 +2,7 @@ package app.controller
 
 import app.model.Course
 import app.repository.CourseRepository
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -60,11 +61,11 @@ class CourseService(val db: CourseRepository) {
        return db.findAll(sort)
     }
 
-//    fun pagedCourses() {
-//        val pageable: PageRequest = PageRequest.of(0, 3)
-////        each page should have 3 courses
-//        db.findAll(pageable)
-//    }
+    fun findAllByPaged(page :Int, size:Int): MutableIterable<Course> {
+        val pageable: PageRequest = PageRequest.of(page, size)
+
+       return db.findAll(pageable).content
+    }
 
 
 }

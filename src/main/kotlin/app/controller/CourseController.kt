@@ -11,6 +11,18 @@ class CourseController(val service: CourseService) {
     @GetMapping("/all")
     fun index() = service.findAllCourses()
 
+    @GetMapping("/all", params = ["sortBy"])
+    fun sortedIndex(
+        @RequestParam sortBy: String
+    ) = service.findAllSorted(sortBy)
+
+    @GetMapping("/all", params = ["page","size"])
+    fun pagedIndex(
+        @RequestParam page: Int,
+        @RequestParam size: Int
+    ) = service.findAllByPaged(page, size)
+
+
     //  get a random course
     @GetMapping("/random")
     fun getRandom() = service.findRandom()
@@ -18,10 +30,7 @@ class CourseController(val service: CourseService) {
     @GetMapping("/{id}")
     fun getById(@PathVariable id: String) = service.findCourseById(id)
 
-    @GetMapping("/all", params = ["sortBy"])
-    fun sortedIndex(
-        @RequestParam sortBy: String
-    ) = service.findAllSorted(sortBy)
+
 
     @PostMapping("/one")
     fun post(@RequestBody course: Course) = service.addCourse(course)
