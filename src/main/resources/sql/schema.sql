@@ -10,3 +10,12 @@ CREATE TABLE IF NOT EXISTS courses (
   cpd                     INT      NOT NULL,
   duration                INT      NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS lessons (
+  id                     VARCHAR(60)  DEFAULT RANDOM_UUID() PRIMARY KEY,
+  title                  VARCHAR      NOT NULL,
+  course_id              VARCHAR(60)  NOT NULL,
+  src                    VARCHAR      NOT NULL,
+  duration               INT(7)      NOT NULL,
+  lesson               INT(3)      NOT NULL
+);

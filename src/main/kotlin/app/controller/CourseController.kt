@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/courses")
 class CourseController(val service: CourseService) {
 
-
     @GetMapping("/all")
     fun index() = service.findAllCourses()
+
+    @GetMapping("/search", params = ["query"])
+    fun search(@RequestParam query: String) = service.searchCourses(query)
 
     @GetMapping("/all", params = ["sortBy"])
     fun sortedIndex(
@@ -22,7 +24,6 @@ class CourseController(val service: CourseService) {
         @RequestParam size: Int
     ) = service.findAllByPaged(page, size)
 
-
     //  get a random course
     @GetMapping("/random")
     fun getRandom() = service.findRandom()
@@ -30,23 +31,16 @@ class CourseController(val service: CourseService) {
     @GetMapping("/{id}")
     fun getById(@PathVariable id: String) = service.findCourseById(id)
 
-
-
     @PostMapping("/one")
     fun post(@RequestBody course: Course) = service.addCourse(course)
 
     @PostMapping("/many")
     fun postAll(@RequestBody courses: List<Course>) = service.addCourses(courses)
 
-
     @PutMapping("/{id}")
     fun update(@PathVariable id: String, @RequestBody course: Course): Course = service.updateCourse(id, course)
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: String) = service.removeCourse(id)
-//
-
-
-
 
 }

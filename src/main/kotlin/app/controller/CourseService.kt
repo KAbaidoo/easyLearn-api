@@ -25,11 +25,11 @@ class CourseService(val db: CourseRepository) {
     fun findAllCourses() = db.findAll()
 
 
-
     fun addCourse(course: Course): Course = db.save(course)
 
     fun updateCourse(id: String, payload: Course): Course {
         return if (db.existsById(id)) {
+            db.deleteById(id)
             db.save(
                 Course(
                     id = payload.id,
@@ -44,7 +44,8 @@ class CourseService(val db: CourseRepository) {
                     duration = payload.duration
                 )
             )
-        } else throw ResponseStatusException(HttpStatus.NOT_FOUND,"The id: $id does not exist")
+
+        } else throw ResponseStatusException(HttpStatus.NOT_FOUND, "The id: $id does not exist")
 
     }
 
@@ -58,14 +59,17 @@ class CourseService(val db: CourseRepository) {
 
     fun findAllSorted(property: String): MutableIterable<Course> {
         val sort: Sort = Sort.by(Sort.Direction.DESC, property)
-       return db.findAll(sort)
+        return db.findAll(sort)
     }
 
-    fun findAllByPaged(page :Int, size:Int): MutableIterable<Course> {
+    fun findAllByPaged(page: Int, size: Int): MutableIterable<Course> {
         val pageable: PageRequest = PageRequest.of(page, size)
 
-       return db.findAll(pageable).content
+        return db.findAll(pageable).content
     }
 
+    fun searchCourses(query: String): MutableIterable<Course> {
+        return db.searchCourses(query)
+    }
 
 }
