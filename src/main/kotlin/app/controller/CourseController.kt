@@ -44,3 +44,5 @@ class CourseController(val service: CourseService) {
     fun delete(@PathVariable id: String) = service.removeCourse(id)
 
 }
+
+

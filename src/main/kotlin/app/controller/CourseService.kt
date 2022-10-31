@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
-class CourseService(val db: CourseRepository) {
+class CourseService(val db: CourseRepository, val lessonService: LessonService) {
 
 
     fun findRandom(): Course {
@@ -28,9 +28,9 @@ class CourseService(val db: CourseRepository) {
     fun addCourse(course: Course): Course = db.save(course)
 
     fun updateCourse(id: String, payload: Course): Course {
-        return if (db.existsById(id)) {
+        val course =  if (db.existsById(id)) {
             db.deleteById(id)
-            db.save(
+           db.save(
                 Course(
                     id = payload.id,
                     title = payload.title,
@@ -45,7 +45,11 @@ class CourseService(val db: CourseRepository) {
                 )
             )
 
+
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND, "The id: $id does not exist")
+
+        course?.id?.let {  it -> lessonService.updateCourseIdForLessons(id, it)  }
+        return course
 
     }
 

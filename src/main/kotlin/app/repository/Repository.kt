@@ -12,4 +12,7 @@ interface CourseRepository : PagingAndSortingRepository<Course, String> {
     fun searchCourses(@Param("queryString") queryString: String): MutableIterable<Course>
 }
 
-interface LessonRepository : PagingAndSortingRepository<Lesson, String>
+interface LessonRepository : PagingAndSortingRepository<Lesson, String> {
+    @Query("SELECT * FROM lessons l WHERE l.course_id= :courseId ORDER BY l.lesson ASC")
+    fun findLessonsByCourseId(@Param("courseId") courseId: String): MutableIterable<Lesson>
+}

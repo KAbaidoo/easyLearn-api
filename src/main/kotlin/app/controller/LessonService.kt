@@ -26,7 +26,7 @@ class LessonService(val db: LessonRepository) {
                     duration = payload.duration,
                     lesson = payload.lesson,
 
-                )
+                    )
             )
 
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND, "The id: $id does not exist")
@@ -46,6 +46,28 @@ class LessonService(val db: LessonRepository) {
         return db.findAll(sort)
     }
 
+    fun findByCourseId(courseId: String): MutableIterable<Lesson> {
+        return db.findLessonsByCourseId(courseId)
+    }
+
+    fun updateCourseIdForLessons(oldId: String, newId: String): MutableIterable<Lesson> {
+        db.findLessonsByCourseId(oldId).forEach {
+            it.id?.let { id -> db.deleteById(id) }
+            db.save(
+                Lesson(
+                    id = null,
+                    title = it.title,
+                    courseId = newId,
+                    src = it.src,
+                    duration = it.duration,
+                    lesson = it.lesson,
+                )
+            )
+
+        }
+        return db.findLessonsByCourseId(newId)
+
+    }
 
 
 }
